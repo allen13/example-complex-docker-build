@@ -7,17 +7,19 @@ import (
     "log"
 )
 
-func hello(w http.ResponseWriter, req *http.Request) {
+func hello(w http.ResponseWriter, r *http.Request) {
     helloEnv := os.Getenv("HELLO")
     
     if helloEnv == "" {
         helloEnv = "hello"
     }
 
-    arg := os.Args[1]
-    if arg == "" {
-        arg = "friend"
+    arg := "friend"
+    if len(os.Args) > 1 {
+        arg = os.Args[1]
     }
+
+    log.Printf("%s %s\n", helloEnv, arg)
     
     fmt.Fprintf(w, "%s %s\n", helloEnv, arg)
 }
